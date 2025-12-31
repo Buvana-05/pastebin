@@ -7,17 +7,21 @@ export interface Paste {
   expires_at?: string;
 }
 
-import { environment } from '../environments/environment';
-
 @Injectable({ providedIn: 'root' })
 export class PasteService {
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+      this.apiUrl = 'http://localhost:8080/api/pastes';
+    } else {
+      this.apiUrl = 'https://pastebin-backend-kwjl.onrender.com/api/pastes';
+    }
+  }
 
   createPaste(content: string, ttl?: number, maxViews?: number) {
-    return this.http.post<any>('http://localhost:8080/api/pastes', {
+    return this.http.post<any>(this.apiUrl, {
       content: content,
       ttl_seconds: ttl,
       max_views: maxViews
@@ -26,6 +30,6 @@ export class PasteService {
 
 
   getPaste(id: string) {
-    return this.http.get<Paste>(`${this.apiUrl}/${id}`);
+    return this.http.get<Paste>(${this.apiUrl}/${id});
   }
 }
