@@ -30,6 +30,6 @@ export class PasteService {
 
 
   getPaste(id: string) {
-    return this.http.get<Paste>(${this.apiUrl}/${id});
+    return this.http.get<Paste>(`${this.apiUrl}/${id}`);
   }
 }
