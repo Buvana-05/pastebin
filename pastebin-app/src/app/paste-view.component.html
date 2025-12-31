@@ -1,0 +1,22 @@
+<div *ngIf="loading">
+  <p>Loading paste...</p>
+</div>
+
+<div *ngIf="error" style="color: red; font-weight: bold;">
+  <h3>Error</h3>
+  <p>{{ error }}</p>
+</div>
+
+<div *ngIf="paste">
+  <h3>Pasted Content:</h3>
+  <pre style="background: #f4f4f4; padding: 10px; border-radius: 5px;">{{ paste.content }}</pre>
+
+  <div style="margin-top: 20px; font-size: 0.9em; color: #666;">
+    <p *ngIf="paste.remaining_views != null">
+      Views remaining: <strong>{{ paste.remaining_views }}</strong>
+    </p>
+    <p *ngIf="paste.expires_at">
+      Expires at: <strong>{{ paste.expires_at | date:'medium' }}</strong>
+    </p>
+  </div>
+</div>

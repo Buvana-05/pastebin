@@ -1,0 +1,27 @@
+<h2>Create Paste</h2>
+
+<div *ngIf="error"
+  style="color: red; font-weight: bold; margin-bottom: 10px; padding: 10px; border: 1px solid red; border-radius: 4px;">
+  Error: {{ error }}
+</div>
+
+<textarea id="content" [(ngModel)]="content" name="content" rows="10" cols="50"></textarea><br>
+
+<br /><br />
+
+<input type="number" [(ngModel)]="ttl" min="1" placeholder="TTL (seconds, optional)" />
+
+<br /><br />
+
+<input type="number" [(ngModel)]="maxViews" min="1" placeholder="Max views (optional)" />
+
+<br /><br />
+
+<button type="button" (click)="createPaste()" [disabled]="loading">
+  {{ loading ? 'Creating...' : 'Create Paste' }}
+</button>
+
+<div *ngIf="shareUrl">
+  <p>Your paste URL:</p>
+  <a [href]="shareUrl">{{ shareUrl }}</a>
+</div>

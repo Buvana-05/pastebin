@@ -1,0 +1,14 @@
+package com.example.pastebin.repository;
+
+import com.example.pastebin.model.Paste;
+import org.springframework.data.jpa.repository.JpaRepository;
+import jakarta.persistence.LockModeType;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
+import java.util.Optional;
+
+public interface PasteRepository extends JpaRepository<Paste, String> {
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT p FROM Paste p WHERE p.id = :id")
+    Optional<Paste> findByIdWithLock(String id);
+}
